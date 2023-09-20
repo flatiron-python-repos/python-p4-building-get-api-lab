@@ -27,12 +27,18 @@ def bakeries():
         jsonify(bakeries_serialized),
         200
     )
-    response.headers['Content-Type'] = 'application/json'
     return response
 
 @app.route('/bakeries/<int:id>')
 def bakery_by_id(id):
-    return ''
+    bakeryd = Bakery.query.filter_by(id=id)
+    serialized_baker = [bakery.to_dict() for bakery in bakeryd]
+
+    response = make_response(
+        jsonify(serialized_baker),
+        200
+    )
+    return response
 
 @app.route('/baked_goods/by_price')
 def baked_goods_by_price():
